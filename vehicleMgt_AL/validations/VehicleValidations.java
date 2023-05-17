@@ -35,7 +35,7 @@ public class VehicleValidations {
 	//color checking
 	
 	public static Color parseAndValidate(String color) {
-		Color validColor=Color.valueOf(color);
+		Color validColor=Color.valueOf(color.toUpperCase());
 		return validColor;
 		
 	}

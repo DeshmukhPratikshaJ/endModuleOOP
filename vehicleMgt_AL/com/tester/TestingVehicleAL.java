@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 import com.core.Color;
 import com.core.Vehicle;
+
+import exception.VehicleException;
+
 import static validations.VehicleValidations.validateAll;
 
 public class TestingVehicleAL {
@@ -41,24 +44,32 @@ public class TestingVehicleAL {
 				 switch(sc.nextInt()) {
 				 
 				 
-					 case 1:
+					 case 1:     //add vehicle
 						 System.out.println("enter vehicle details:chasis, company, Color, price, MfgDate(year-month-date)");
 				         showroom=validateAll(sc.next(), sc.next(), sc.next(),sc.nextDouble(), sc.next(), showroom);
 				         System.out.println("vehicle added");
 				         
 						 break;
 						 
-					 case 2:
+					 case 2:    //display all
+						 System.out.println("----all vehicles in showroom--------");
 						 restore(filename).forEach(System.out::println);
 						 break;
 						 
-					 case 3:
+					 case 3:    //searching
+						 System.out.println("enter chasis number");
+						 Vehicle toSearch=new Vehicle(sc.next());
+						 if(showroom.contains(toSearch))
+							 System.out.println(toSearch);
+						 else
+							 throw new VehicleException("no such vehicle exist in the showroom");
 						 break;
 						 
 					 case 4://sorting by chasis
 						 
 						Collections.sort(showroom);            //Vehicle must implement comparable
-					    showroom.forEach(System.out::println);
+					    System.out.println("----sorting by chasis number---");
+						showroom.forEach(System.out::println);
 						 break;
 						 
 					 case 5://-----------SORTING BY COLOR--------------
@@ -71,6 +82,7 @@ public class TestingVehicleAL {
 							}
 							 
 						});
+						 System.out.println("----sorting by color number---");
 						 showroom.forEach(System.out::println);
 						 break;
 						 
