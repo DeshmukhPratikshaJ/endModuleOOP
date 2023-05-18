@@ -37,7 +37,8 @@ public class TestingVehicleAL {
 			boolean exit=false;
 			 System.out.println("MENU: 1.add vehicle 2.display vehicle \n"
 			 		+ "3. search vehicle details based on chasis no\n"
-			 		+ " 4.sort based on chasis 5.sort based on company and color 0.exit");
+			 		+ " 4.sort based on chasis 5.sort based on company and color \n"
+			 		+ "6.delete a vehicle using chasis number 0.exit");
 			 while(!exit) {
 				 System.out.println("enter choice");
 				 try {
@@ -53,7 +54,7 @@ public class TestingVehicleAL {
 						 
 					 case 2:    //display all
 						 System.out.println("----all vehicles in showroom--------");
-						 restore(filename).forEach(System.out::println);
+						 showroom.forEach(System.out::println);
 						 break;
 						 
 					 case 3:    //searching
@@ -65,7 +66,7 @@ public class TestingVehicleAL {
 							 throw new VehicleException("no such vehicle exist in the showroom");
 						 break;
 						 
-					 case 4://sorting by chasis
+					 case 4://------------sorting by chasis
 						 
 						Collections.sort(showroom);            //Vehicle must implement comparable
 					    System.out.println("----sorting by chasis number---");
@@ -82,18 +83,47 @@ public class TestingVehicleAL {
 							}
 							 
 						});
-						 System.out.println("----sorting by color number---");
+						 System.out.println("----sorting by company and color---");
 						 showroom.forEach(System.out::println);
+						 break;
+						 
+					 case 6:   //mark unavailable based on chasis number
+						 System.out.println("enter chasis number");
+						 Vehicle v=new Vehicle(sc.next());
+						 int find=showroom.indexOf(v);
+						 if(find!=-1)
+						 showroom.get(find).setAvailable(false);
+						 else
+							 throw new VehicleException("no such vehicle in the showroom");
+						
+						 System.out.println("--after updating the record---");
+						 showroom.forEach(System.out::println);
+						 break;
+						 
+					 case 7:   //deletion based on chasis--primary key
+						 
+						 System.out.println("enter chasis number");
+						 Vehicle toDelete=new Vehicle(sc.next());
+						 System.out.println(toDelete);
+						 if(showroom.contains(toDelete))
+						 {
+						 showroom.remove(toDelete);
+						 System.out.println("successfully deleted");}
+						 else 
+							 throw new VehicleException("no such vehicle exist in the showroom");
 						 break;
 						 
 					 case 0:
 						 exit=true;
 						 store(showroom, filename);
+						 storeInCharFile(showroom, filename);
 						 System.out.println("-----STORING THE DETAILS IN FILE BEFORE CLOSING APPLICATION--------");
+						//	 restore(filename).forEach(System.out::println);
 						 break;
 				 
 				 }
-				 }catch (Exception e) {
+				 }
+			  catch (Exception e) {
 					 sc.nextLine();
 						e.printStackTrace();
 					}

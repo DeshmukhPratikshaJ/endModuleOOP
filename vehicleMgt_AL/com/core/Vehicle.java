@@ -34,7 +34,7 @@ public class Vehicle implements Serializable,Comparable<Vehicle>{
 		this.chasis = chasis;
 	}
 
-//----------------equals-----------------
+//-----------------compareTo----------------
 	@Override
 	public int compareTo(Vehicle o) {
 		return this.chasis.compareTo(o.getChasis());
@@ -72,5 +72,29 @@ public class Vehicle implements Serializable,Comparable<Vehicle>{
 	public String getChasis() {
 		return chasis;
 	}
+	
 
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
+
+
+	//-----------equals---------------
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Vehicle)
+		return chasis.equals(((Vehicle) obj).getChasis());
+		else
+			return false;
+	}
+
+	
+	
 }
